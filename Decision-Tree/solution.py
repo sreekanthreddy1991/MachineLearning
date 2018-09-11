@@ -139,7 +139,7 @@ def get_accuracy(tree, data, label_attr):
         label = getLabelFromTree(tree, row, data)
         if label == row[label_index]:
             correct+=1
-    return round(float(correct)/data.__len__(), 3)
+    return float(correct)/data.__len__()
 
 def cross_validation(dir_path, label_attr, depths):
     files = glob.glob(dir_path + '/*.csv')
