@@ -207,7 +207,7 @@ print("Though we found the maximum accuracy at depth 10, there isn't much differ
 tree_with_depth = buildTreeWithDepth(train_data, "label", 5, 0)
 print("b. Test accuracy with depth: 5 is "+str(get_accuracy(tree_with_depth, test_data, "label")*100)+"%")
 print("\n")
-print("c. Observered accuracy without limiting depth is 1.0 and with depth of 5 is around 99.62%. "
+print("c. Observed accuracy without limiting depth is 1.0 and with depth of 5 is around 99.62%. "
       "I think limiting depth is a good idea, because having smaller trees is always better as traversing is faster than "
       "longer trees. If the test data is large, time taken to label all the data is lower with the smaller trees and that too with "
       "high accuracy. But we need to be careful while chosing the depth. We need to consider the balance between the "
