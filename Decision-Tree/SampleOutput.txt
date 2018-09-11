@@ -1,0 +1,48 @@
+========================================================
+a. Implementation of ID3 decision tree algorithm
+
+1. I have used python for implementation of ID3 algorithm and dictionary data structure to create the tree
+2. At any level if the Information Gain for all the features in the sublevel is same, then I chose the first feature in all of them
+3. In limiting depth, I found that accuracy is not 100% on training set itself, I believe it may be because of the anomolies in training set
+
+b. Error on train.csv: 0.0%
+
+c. Error on test.csv: 0.0%
+
+d. Maximum depth of the tree: 6
+
+========================================================
+
+Limiting Depth:
+
+a. Average cross validation accuracy and standard deviation for each depth are:
+
+Depth    | Average Accuracy(%)
+1 | 76.18683001531393
+2 | 94.77794793261867
+3 | 95.92649310872895
+4 | 95.83460949464012
+5 | 96.33996937212864
+10 | 96.3552833078101
+15 | 96.3552833078101
+
+
+Depth | Average Standard Deviation
+1 | 0.13343614877560425
+2 | 0.04238226805652208
+3 | 0.043024801407002974
+4 | 0.03617980099441276
+5 | 0.03303837441999829
+10 | 0.03320547197474912
+15 | 0.03320547197474912
+
+
+maximum accuracy at depth: 10
+
+
+Though we found the maximum accuracy at depth 10, there isn't much difference between accuracies for depths 5 and 10. We have seen from ID3 implementation as the maximum depth to be 6, so after this depth the accuracies will become saturated. So, I think it is better to select 5 as the optimum depth as there is no considerable differences between accuracies. Also choosing 5, we can improve the computation speed and lower depth trees with high accuracies are always preferable.
+
+b. Test accuracy with depth: 5 is 99.62358845671268%
+
+
+c. Observered accuracy without limiting depth is 1.0 and with depth of 5 is around 99.62%. I think limiting depth is a good idea, because having smaller trees is always better as traversing is faster than longer trees. If the test data is large, time taken to label all the data is lower with the smaller trees and that too with high accuracy. But we need to be careful while chosing the depth. We need to consider the balance between the depth we are going to chose and the performance we want to achieve with the chosen depth.
