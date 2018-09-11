@@ -162,7 +162,6 @@ def cross_validation(dir_path, label_attr, depths):
             accuracy = get_accuracy(tree, testing_data, label_attr)
             # print("test accuracy: "+ str(accuracy))
             accuracy_list.append(accuracy)
-        print(accuracy_list)
         accuracy_map[depth] = np.mean(accuracy_list)
         std_map[depth] = np.std(accuracy_list)
     opt_depth = 0
