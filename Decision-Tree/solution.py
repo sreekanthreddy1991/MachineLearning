@@ -188,7 +188,7 @@ print("d. Maximum depth of the tree: "+str(depth)+"\n")
 print("========================================================\n")
 print("Limiting Depth:\n")
 depths = [1, 2, 3, 4, 5, 10, 15]
-accuracy_map, std_map, opt_depth = cross_validation("data_new\CVfolds_new", "label", depths)
+accuracy_map, std_map, opt_depth = cross_validation("data_new/CVfolds_new", "label", depths)
 print("a. Average cross validation accuracy and standard deviation for each depth are:\n")
 print("Depth    | Average Accuracy(%)")
 for key in accuracy_map.keys():
