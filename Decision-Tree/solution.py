@@ -84,7 +84,7 @@ def build_tree(s, label_attr):
             subset = np.delete(data_subset.raw_data, col_index, axis=1)
             attr_list = list(s.column_index_dict.keys())
             attr_list.remove(best_attr)
-            attr_arr = np.array(attr_list)
+            attr_arr = np.asarray(attr_list)
             subset = np.insert(subset, 0, attr_arr, axis=0)
             new_data = Data(data=subset)
             tree[best_attr][val], depth = build_tree(new_data, label_attr)
@@ -114,7 +114,7 @@ def buildTreeWithDepth(s, label_attr, max_depth, current_depth=0):
             subset = np.delete(data_subset.raw_data, col_index, axis=1)
             attr_list = list(s.column_index_dict.keys())
             attr_list.remove(best_attr)
-            attr_arr = np.array(attr_list)
+            attr_arr = np.asarray(attr_list)
             subset = np.insert(subset, 0, attr_arr, axis=0)
             new_data = Data(data=subset)
             tree[best_attr][val] = buildTreeWithDepth(new_data, label_attr, max_depth, current_depth+1)
@@ -139,33 +139,30 @@ def get_accuracy(tree, data, label_attr):
         label = getLabelFromTree(tree, row, data)
         if label == row[label_index]:
             correct+=1
-    return float(correct)/data.__len__()
+    return round(float(correct)/data.__len__(), 3)
 
 def cross_validation(dir_path, label_attr, depths):
-    files = glob.glob(dir_path + '\\*.csv')
+    files = glob.glob(dir_path + '/*.csv')
     accuracy_map = {}
     std_map = {}
     for depth in depths:
         accuracy_list = []
         # print("Depth: "+str(depth))
         for i in range(len(files)):
-            initial_data = Data(fpath=files[i])
-            data0 = initial_data.raw_data
-            data1 = Data(fpath=files[(i + 1) % len(files)]).raw_data
-            data2 = Data(fpath=files[(i + 2) % len(files)]).raw_data
-            data3 = Data(fpath=files[(i + 3) % len(files)]).raw_data
-            data4 = Data(fpath=files[(i + 4) % len(files)])
+            data0 = np.loadtxt(files[i], delimiter=",", dtype=str)
+            data1 = np.loadtxt(files[(i + 1) % len(files)], delimiter=",", dtype=str, skiprows=1)
+            data2 = np.loadtxt(files[(i + 2) % len(files)], delimiter=",", dtype=str, skiprows=1)
+            data3 = np.loadtxt(files[(i + 3) % len(files)], delimiter=",", dtype=str, skiprows=1)
+            data4 = np.loadtxt(files[(i + 4) % len(files)], delimiter=",", dtype=str)
             merged_data = np.concatenate((data0, data1, data2, data3), axis=0)
-            attr_list = list(initial_data.column_index_dict.keys())
-            attr_arr = np.array(attr_list)
-            merged_data = np.insert(merged_data, 0, attr_arr, axis=0)
             training_data = Data(data=merged_data)
-            testing_data = data4
+            testing_data = Data(data=data4)
             tree = buildTreeWithDepth(training_data, label_attr, depth, 0)
             # print("train accuracy: "+str(get_accuracy(tree, training_data, label_attr)))
             accuracy = get_accuracy(tree, testing_data, label_attr)
             # print("test accuracy: "+ str(accuracy))
             accuracy_list.append(accuracy)
+        print(accuracy_list)
         accuracy_map[depth] = np.mean(accuracy_list)
         std_map[depth] = np.std(accuracy_list)
     opt_depth = 0
